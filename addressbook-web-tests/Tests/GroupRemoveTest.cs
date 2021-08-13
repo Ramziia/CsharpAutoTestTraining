@@ -4,9 +4,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
-//using OpenQA.Selenium;
-//using OpenQA.Selenium.Firefox;
-//using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
 {
@@ -16,12 +13,12 @@ namespace WebAddressbookTests
         [Test]
         public void GroupRemoveTest()
         {
-            GoToHomePage();
-            LogIn(new AccountData("admin", "secret"));
-            GoToGroupPage();
-            SelectGroup(1);
-            RemoveGroup();
-            GoToGroupPage();
+            app.Navigator.GoToHomePage();
+            app.Auth.LogIn(new AccountData("admin", "secret"));
+            app.Navigator.GoToGroupPage();
+            app.Groups.SelectGroup(1);
+            app.Groups.RemoveGroup();
+            app.Navigator.GoToGroupPage();
         }
     }
 }

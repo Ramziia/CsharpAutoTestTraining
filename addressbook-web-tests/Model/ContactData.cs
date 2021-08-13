@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebAddressbookTests
 {
-    enum ElementName
+    public enum ElementName
     {
         Firstname,
         Middlename,
