@@ -1,4 +1,5 @@
-﻿using System;
+﻿//using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -10,19 +11,18 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactCreationTest : TestBase
+    public class GroupRemoveTests : TestBase
     {
         [Test]
-        public void TheCreateContactTest()
+        public void GroupRemoveTest()
         {
             GoToHomePage();
             LogIn(new AccountData("admin", "secret"));
-            GoToAddNewPage();
-            ContactData _contact = new ContactData("qweFirstname", "qweLastname");
-
-            FillContactForm(_contact);
-            GoToHomePage();
-            LogOut();
+            GoToGroupPage();
+            SelectGroup(1);
+            RemoveGroup();
+            GoToGroupPage();
         }
     }
 }
+

@@ -38,7 +38,7 @@ namespace WebAddressbookTests
         User,
         Pass
     }
-    class ContactData
+    public class ContactData
     {
         private string firstname;
         private string lastname;
