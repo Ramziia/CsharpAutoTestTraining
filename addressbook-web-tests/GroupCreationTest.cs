@@ -48,7 +48,7 @@ namespace WebAddressbookTests
             GoToGroupPage();
             InitGroupCreation();
             FillGroupCreation(new GroupData("qweName", "qweHeader", "qweFooter"));
-            SubmitGrpupPage();
+            SubmitGroupPage();
             BackToGroupPage();
             LogOut();
         }
@@ -63,7 +63,7 @@ namespace WebAddressbookTests
             driver.FindElement(By.LinkText("groups")).Click();
         }
 
-        private void SubmitGrpupPage()
+        private void SubmitGroupPage()
         {
             driver.FindElement(By.Name("submit")).Click();
         }
