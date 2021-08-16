@@ -19,6 +19,15 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name(name_of_element)).Clear();
             driver.FindElement(By.Name(name_of_element)).SendKeys(value);
         }
+        public void FillField(By locator, string text)
+        {
+            if (text!=null)
+            {
+                driver.FindElement(locator).Click();
+                driver.FindElement(locator).Clear();
+                driver.FindElement(locator).SendKeys(text);
+            }
+        }
         public void FillFieldSelect(string name, string value)
         {
             driver.FindElement(By.Name(name)).Click();

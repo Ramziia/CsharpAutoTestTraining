@@ -9,12 +9,12 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupModificationTests : TestBase
+    public class GroupModificationTests : AuthTestBase
     {
         [Test]
         public void GroupModificationTest()
         {
-            GroupData groupData = new GroupData("qqq", "eee", "rrr");
+            GroupData groupData = new GroupData("qqq", null, null);
             app.Groups.Modify(1, groupData);
         }
     }

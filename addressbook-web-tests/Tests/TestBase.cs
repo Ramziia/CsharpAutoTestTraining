@@ -6,24 +6,15 @@ using NUnit.Framework;
 
 namespace WebAddressbookTests
 {
-    [TestFixture]
     public class TestBase
     {
-        private StringBuilder verificationErrors;
         protected ApplicationManager app;
         [SetUp]
-        public void SetupTest()
+        public void SetupApplicationManager()
         {
-            app = new ApplicationManager();
-            app.Navigator.GoToHomePage();
-            app.Auth.LogIn(new AccountData("admin", "secret"));
-            verificationErrors = new StringBuilder();
+            app = ApplicationManager.GetInstance();
         }
 
-        [TearDown]
-        public void TeardownTest()
-        {
-            app.Stop();
-        }
+
     }
 }

@@ -17,14 +17,32 @@ namespace WebAddressbookTests
         {}
         public ContactHelper Modify(ContactData contactDataDiff, int index)
         {
+            if(! IsContactExist(index))
+            {
+                Create(new ContactData("q", "w"));
+                manager.Navigator.GoToHomePage();
+                index = 2;
+            }
             EditContact(index);
             FillContactForm(contactDataDiff);
             SubmiteGroupUpdate();
             manager.Navigator.GoToHomePage();
             return this;
         }
+
+        private bool IsContactExist(int index)
+        {
+            return IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[" + index + "]/td/input"));
+        }
+
         public ContactHelper Remove(int index)
         {
+            if (!IsContactExist(index))
+            {
+                Create(new ContactData("q", "w"));
+                manager.Navigator.GoToHomePage();
+                index = 2;
+            }
             SelectContact(index);
             SubmiteGroupDeletion();
             CloseDialogWindowSureDelete();
@@ -36,8 +54,7 @@ namespace WebAddressbookTests
             manager.Navigator.GoToAddNewPage();
             FillContactForm(contactdata);
             manager.Navigator
-                .GoToHomePage()
-                .LogOut();
+                .GoToHomePage();
             return this;
         }
         public ContactHelper SubmiteGroupDeletion()
@@ -56,6 +73,7 @@ namespace WebAddressbookTests
         }
         private void EditContact(int index_table)
         {
+            Thread.Sleep(4000);
             driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + index_table + "]/td[8]/a/img")).Click();
         }
         private void SelectContact(int index_table)

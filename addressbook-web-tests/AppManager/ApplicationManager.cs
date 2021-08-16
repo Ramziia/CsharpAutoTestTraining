@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -19,6 +20,8 @@ namespace WebAddressbookTests
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
         protected FillFieldHelper fillfield;
+        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
+
         public IWebDriver Driver
         {
             get
@@ -33,7 +36,7 @@ namespace WebAddressbookTests
                 return baseURL;
             }
         }
-        public ApplicationManager()
+        private ApplicationManager()
         {
             baseURL = "http://localhost/addressbook";
             driver = new FirefoxDriver();
@@ -42,6 +45,16 @@ namespace WebAddressbookTests
             groupHelper = new GroupHelper(this);
             contactHelper = new ContactHelper(this);
             fillfield = new FillFieldHelper(this);
+        }
+        public static ApplicationManager GetInstance()
+        {
+            if(! app.IsValueCreated)
+            {
+                ApplicationManager newInstance = new ApplicationManager();
+                app.Value = newInstance;
+                app.Value.Navigator.GoToHomePage();
+            }
+            return app.Value;
         }
 
         public FillFieldHelper FillField
@@ -79,7 +92,7 @@ namespace WebAddressbookTests
                 return contactHelper;
             }
         }
-        public void Stop()
+        ~ApplicationManager()
         {
             try
             {

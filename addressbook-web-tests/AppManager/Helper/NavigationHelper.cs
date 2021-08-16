@@ -15,22 +15,22 @@ namespace WebAddressbookTests
         public NavigationHelper(ApplicationManager manager) : base(manager) {}
         public NavigationHelper GoToHomePage()
         {
-            manager.Driver.Navigate().GoToUrl(manager.BaseURL);
+            if(driver.Url!=manager.BaseURL)
+                manager.Driver.Navigate().GoToUrl(manager.BaseURL);
             return this;
         }
         public NavigationHelper GoToGroupPage()
         {
+            if (driver.Url == manager.BaseURL + "/group.php"  && IsElementPresent(By.Name("new")))
+                return this;
             driver.FindElement(By.LinkText("groups")).Click();
             return this;
         }
         public NavigationHelper GoToAddNewPage()
         {
+            if (driver.Url == manager.BaseURL + "/edit.php" && IsElementPresent(By.Name("submit")))
+                return this;
             driver.FindElement(By.LinkText("add new")).Click();
-            return this;
-        }
-        public NavigationHelper LogOut()
-        {
-            driver.FindElement(By.LinkText("Logout")).Click();
             return this;
         }
     }
