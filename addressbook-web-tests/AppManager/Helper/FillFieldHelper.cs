@@ -12,7 +12,7 @@ namespace WebAddressbookTests
 {
     public class FillFieldHelper : HelperBase
     {
-        public FillFieldHelper(IWebDriver driver):base(driver) {}
+        public FillFieldHelper(ApplicationManager manager):base(manager) {}
         public void FillField(string name_of_element, string value)
         {
             driver.FindElement(By.Name(name_of_element)).Click();

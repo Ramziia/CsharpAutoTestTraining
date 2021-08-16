@@ -10,13 +10,13 @@ namespace WebAddressbookTests
     public class TestBase
     {
         private StringBuilder verificationErrors;
-        protected string baseURL;
         protected ApplicationManager app;
         [SetUp]
         public void SetupTest()
         {
             app = new ApplicationManager();
-            baseURL = "http://localhost/addressbook/";
+            app.Navigator.GoToHomePage();
+            app.Auth.LogIn(new AccountData("admin", "secret"));
             verificationErrors = new StringBuilder();
         }
 

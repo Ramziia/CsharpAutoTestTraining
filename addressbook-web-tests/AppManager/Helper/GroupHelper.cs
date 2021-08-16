@@ -10,37 +10,93 @@ using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
 {
-    public class GroupHelper
+    public class GroupHelper:HelperBase
     {
-        private IWebDriver driver;
-        private FillFieldHelper fillFieldHelper;
 
-        public GroupHelper(IWebDriver driver)
+        public GroupHelper(ApplicationManager manager):base(manager)
         {
-            this.driver = driver;
-            this.fillFieldHelper = new FillFieldHelper(driver);
         }
-        public void SubmitGroupPage()
+        public GroupHelper SubmitGroupPage()
         {
             driver.FindElement(By.Name("submit")).Click();
+            return this;
         }
-        public void FillGroupCreation(GroupData groupdata)
+
+        public GroupHelper Modify(int index, GroupData groupData)
         {
-            fillFieldHelper.FillField("group_name", groupdata.Name);
-            fillFieldHelper.FillField("group_header", groupdata.Header);
-            fillFieldHelper.FillField("group_footer", groupdata.Footer);
+            manager.Navigator.GoToHomePage();
+            manager.Navigator.GoToGroupPage();
+            SelectGroup(index);
+            InitGroupModification();
+            FillGroupModification(groupData);
+            SubmiteGroupModification();
+            manager.Navigator.GoToGroupPage();
+            return this;
         }
-        public void InitGroupCreation()
+
+        public GroupHelper SubmiteGroupModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public GroupHelper FillGroupModification(GroupData groupdata)
+        {
+            FillGroup(groupdata);
+            return this;
+        }
+
+        public GroupHelper InitGroupModification()
+        {
+            driver.FindElement(By.Name("edit")).Click();
+            return this;
+        }
+        public GroupHelper FillGroup(GroupData groupdata)
+        {
+            manager.FillField.FillField("group_name", groupdata.Name);
+            manager.FillField.FillField("group_header", groupdata.Header);
+            manager.FillField.FillField("group_footer", groupdata.Footer);
+            return this;
+        }
+        public GroupHelper FillGroupCreation(GroupData groupdata)
+        {
+            FillGroup(groupdata);
+            return this;
+        }
+        public GroupHelper InitGroupCreation()
         {
             driver.FindElement(By.Name("new")).Click();
+            return this;
         }
-        public void RemoveGroup()
+        public GroupHelper RemoveGroup()
         {
             driver.FindElement(By.Name("delete")).Click();
+            return this;
         }
-        public void SelectGroup(int index)
+        public GroupHelper SelectGroup(int index)
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/span[" + index + "]/input")).Click();
+            return this;
+        }
+        public GroupHelper Create(GroupData groupData)
+        {
+            manager.Navigator.GoToGroupPage();
+            InitGroupCreation();
+            FillGroupCreation(groupData);
+            SubmitGroupPage();
+            manager.Navigator
+                .GoToGroupPage()
+                .LogOut();
+
+            return this;
+        }
+        public GroupHelper Remove(int index)
+        {
+            manager.Navigator.GoToGroupPage();
+            SelectGroup(index);
+            RemoveGroup();
+            manager.Navigator.GoToGroupPage();
+            return this;
         }
     }
 }

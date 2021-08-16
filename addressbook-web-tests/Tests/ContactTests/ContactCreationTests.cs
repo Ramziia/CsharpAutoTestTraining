@@ -10,19 +10,13 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactCreationTest : TestBase
+    public class ContactCreationTests : TestBase
     {
         [Test]
-        public void TheCreateContactTest()
+        public void ContactCreateTest()
         {
-            app.Navigator.GoToHomePage();
-            app.Auth.LogIn(new AccountData("admin", "secret"));
-            app.Navigator.GoToAddNewPage();
             ContactData _contact = new ContactData("qweFirstname", "qweLastname");
-
-            app.Contact.FillContactForm(_contact);
-            app.Navigator.GoToHomePage();
-            app.Navigator.LogOut();
+            app.Contact.Create(_contact);
         }
     }
 }

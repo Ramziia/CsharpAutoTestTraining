@@ -13,21 +13,44 @@ namespace WebAddressbookTests
     public class ApplicationManager
     {
         protected IWebDriver driver;
-        protected string baseURL = "http://localhost/addressbook/";
+        protected string baseURL;
         protected LoginHelper loginHelper;
         protected NavigationHelper navigationHelper;
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
-
+        protected FillFieldHelper fillfield;
+        public IWebDriver Driver
+        {
+            get
+            {
+                return driver;
+            }
+        }
+        public string BaseURL
+        {
+            get
+            {
+                return baseURL;
+            }
+        }
         public ApplicationManager()
         {
+            baseURL = "http://localhost/addressbook";
             driver = new FirefoxDriver();
-            loginHelper = new LoginHelper(driver);
-            navigationHelper = new NavigationHelper(driver, baseURL);
-            groupHelper = new GroupHelper(driver);
-            contactHelper = new ContactHelper(driver);
+            loginHelper = new LoginHelper(this);
+            navigationHelper = new NavigationHelper(this);
+            groupHelper = new GroupHelper(this);
+            contactHelper = new ContactHelper(this);
+            fillfield = new FillFieldHelper(this);
         }
 
+        public FillFieldHelper FillField
+        {
+            get
+            {
+                return fillfield;
+            }
+        }
         public LoginHelper Auth
         {
             get
@@ -56,7 +79,6 @@ namespace WebAddressbookTests
                 return contactHelper;
             }
         }
-
         public void Stop()
         {
             try
